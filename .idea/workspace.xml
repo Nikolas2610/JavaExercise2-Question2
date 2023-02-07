@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7051fd0-2121-430a-9d6e-25d3b61eeb4a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Graph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EdgeList.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EdgeServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EdgeServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +44,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application">
+    <configuration name="Server" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="EdgeServer" />
       <module name="Exercise2-Question2" />
       <method v="2">
@@ -67,7 +65,10 @@
       <option name="presentableId" value="Default" />
       <updated>1672923198869</updated>
       <workItem from="1672923200444" duration="6201000" />
-      <workItem from="1675704481194" duration="1001000" />
+      <workItem from="1675704481194" duration="1176000" />
+      <workItem from="1675713502607" duration="1168000" />
+      <workItem from="1675717273654" duration="2118000" />
+      <workItem from="1675763094410" duration="13000" />
     </task>
     <servers />
   </component>

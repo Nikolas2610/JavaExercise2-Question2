@@ -23,7 +23,7 @@ public class EdgeServer extends Thread {
 
     public static void main(String[] args) throws IOException {
         // Get the random Graph
-        graph = new Graph(3000,30000);
+        graph = new Graph(3000000, 3000000);
 //      Initialize socket server with port
         int count = 0;
         ServerSocket serverSocket = null;
@@ -71,47 +71,52 @@ public class EdgeServer extends Thread {
                         + " (example: 4,2)\nFor exit write -1,-1:");
 //          Server waiting for response from client
                 inputLine = in.readLine();
+                if (inputLine.equals("save-file")) {
+//          Save the graph to the graph.txt file
+                    graph.saveGraphToFile();
+                } else {
 //          Checking the empty message
-                if (inputLine == null || inputLine.length() == 0) {
-                    out.println("Empty input");
-                    continue;
-                }
+                    if (inputLine == null || inputLine.length() == 0) {
+                        out.println("Empty input");
+                        continue;
+                    }
 //          Split the message from client
-                String[] edges = inputLine.split(",");
+                    String[] edges = inputLine.split(",");
 //          Checking if the array is the correct
-                if (edges.length == 2) {
-                    try {
+                    if (edges.length == 2) {
+                        try {
 //                  Transform the string data to numbers
-                        int[] edgesInt = new int[2];
-                        for (int i = 0; i < edges.length; i++) {
-                            edgesInt[i] = Integer.parseInt(edges[i]);
-                        }
+                            int[] edgesInt = new int[2];
+                            for (int i = 0; i < edges.length; i++) {
+                                edgesInt[i] = Integer.parseInt(edges[i]);
+                            }
 //                  Check if the user want to close the connection
-                        if (edges[0].equals("-1") && edges[1].equals("-1")) {
-                            System.out.println(ANSI_RED + "Client " + this.clientId +  " has been disconnected from server" + ANSI_RESET);
-                            out.println("Close connection with server!");
-                            break;
-                        }
+                            if (edges[0].equals("-1") && edges[1].equals("-1")) {
+                                System.out.println(ANSI_RED + "Client " + this.clientId + " has been disconnected from server" + ANSI_RESET);
+                                out.println("Close connection with server!");
+                                break;
+                            }
 //                  Check if the user gives available numbers with the min and max nodes
-                        if (edgesInt[0] >= graph.getNODES() || edgesInt[1] >= graph.getNODES() ||
-                                edgesInt[0] < 0 || edgesInt[1] < 0) {
+                            if (edgesInt[0] >= graph.getNODES() || edgesInt[1] >= graph.getNODES() ||
+                                    edgesInt[0] < 0 || edgesInt[1] < 0) {
+                                out.println("Wrong input");
+                                continue;
+                            }
+//                  Check if the edge exists to the graph and create message for the client
+                            String message = graph.edgeExists(edgesInt[0], edgesInt[1]);
+                            System.out.println(ANSI_YELLOW + "Client " + this.clientId + ": Row: " + edges[0] + " Col: " + edges[1] + ANSI_RESET);
+//                  Send the server response to the client
+                            out.println(message);
+                        } catch (NumberFormatException e) {
+                            // Handle the exception if the user input are numbers
                             out.println("Wrong input");
                             continue;
                         }
-//                  Check if the edge exists to the graph and create message for the client
-                        String message = graph.edgeExists(edgesInt[0], edgesInt[1]);
-                        System.out.println(ANSI_YELLOW + "Client " + this.clientId +  ": Row: " + edges[0] + " Col: " + edges[1] + ANSI_RESET);
-//                  Send the server response to the client
-                        out.println(message);
-                    } catch (NumberFormatException e) {
-                        // Handle the exception if the user input are numbers
+                    } else {
+//              Capture the error for bad input
                         out.println("Wrong input");
                         continue;
                     }
-                } else {
-//              Capture the error for bad input
-                    out.println("Wrong input");
-                    continue;
                 }
             }
 //      Close client connection
